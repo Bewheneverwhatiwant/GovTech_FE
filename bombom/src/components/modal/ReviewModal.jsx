@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CustomButtonSubmit from "../container/CustomButtonSubmit";
 import CardContainer from "../container/CardContainer";
 import CustomRow from "../container/CustomRow";
+import { CloseIcon } from "../icons/wantbolbom";
 
 const ReviewModal = ({ show, onClose, onReviewRequest }) => {
   const [rating, setRating] = useState(0);
@@ -34,8 +35,13 @@ const ReviewModal = ({ show, onClose, onReviewRequest }) => {
   return (
     <Overlay>
       <ModalContainer>
-        <CustomRow width="100%" alignItems="center" justifyContent="flex-end">
-          <CloseButton onClick={onClose}>&times;</CloseButton>
+        <CustomRow
+          onClick={onClose}
+          width="100%"
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <CloseIcon />
         </CustomRow>
         <ModalHeader>
           <ModalTitle>돌보미 BBB님의 리뷰 남기기</ModalTitle>
@@ -76,7 +82,7 @@ const Overlay = styled.div`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 390px;
+  width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
@@ -89,7 +95,8 @@ const ModalContainer = styled.div`
   background: white;
   padding: 2rem;
   border-radius: 35px;
-  width: 300px;
+  width: 90%;
+  max-width: 350px;
   position: relative;
   gap: 1rem;
   box-sizing: border-box;
@@ -130,7 +137,7 @@ const KeywordContainer = styled.div`
 
 const Keyword = styled.div`
   background-color: trnaparent;
-  padding: 0.5rem 1rem;
+  padding: 0.05rem 0.05rem;
   border-radius: 20px;
   font-size: 14px;
 `;

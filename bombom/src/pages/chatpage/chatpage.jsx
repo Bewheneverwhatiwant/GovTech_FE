@@ -12,14 +12,16 @@ import ConfirmModal from "../../components/modal/ConfirmModal";
 import ReviewModal from "../../components/modal/ReviewModal";
 import CustomFont from "../../components/container/CustomFont";
 import ProfileModal from "../../components/modal/ProfileModal";
+import RecruitModal from "../../components/modal/RecruitModal";
 
 const ChatPage = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
+  const [isDolbom, setIsDolbom] = useState(false);
+
   const [chatData, setChatData] = useState([
     { chat: "안녕하세요", isMe: false },
     { chat: "안녕하세요", isMe: true },
-
     { chat: "안녕하세요", isMe: false },
     { chat: "안녕하세요", isMe: true },
     { chat: "안녕하세요", isMe: false },
@@ -46,9 +48,10 @@ const ChatPage = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewRequested, setReviewRequested] = useState(false);
 
-  // 프로필 모달 관련 상태
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [selectedProfile, setSelectedProfile] = useState(""); // 선택된 프로필의 이름
+  const [selectedProfile, setSelectedProfile] = useState("");
+
+  const [showRecruitModal, setShowRecruitModal] = useState(false);
 
   const contentRef = useRef(null);
 
@@ -106,10 +109,16 @@ const ChatPage = () => {
       { chat: "리뷰작성이 완료되었습니다.", isMe: true },
     ]);
   };
-  // 프로필 모달을 여는 함수
+
   const handleProfileClick = (profileName) => {
     setSelectedProfile(profileName);
     setShowProfileModal(true);
+  };
+
+  const handleRecruitRequest = () => {
+    // Recruit 처리 로직 추가
+    console.log("Recruit request handled");
+    // 필요 시, 상태 업데이트
   };
 
   const cardData = {
@@ -220,14 +229,27 @@ const ChatPage = () => {
 
       {showOptions && (
         <OptionsContainer>
-          {!paymentRequested && (
-            <OptionButton onClick={() => setShowModal(true)}>
-              결제 요청하기
-            </OptionButton>
+          {isDolbom ? (
+            <>
+              {!paymentRequested && (
+                <OptionButton onClick={() => setShowModal(true)}>
+                  결제 요청하기
+                </OptionButton>
+              )}
+              <OptionButton onClick={() => setShowReviewModal(true)}>
+                리뷰 작성하기
+              </OptionButton>
+            </>
+          ) : (
+            <>
+              <OptionButton onClick={() => setShowRecruitModal(true)}>
+                작성글 모집완료하기
+              </OptionButton>
+              <OptionButton onClick={() => setShowReviewModal(true)}>
+                리뷰 작성하기
+              </OptionButton>
+            </>
           )}
-          <OptionButton onClick={() => setShowReviewModal(true)}>
-            리뷰 작성하기
-          </OptionButton>
         </OptionsContainer>
       )}
 
@@ -239,7 +261,14 @@ const ChatPage = () => {
           onPaymentRequest={handlePaymentRequest}
         />
       )}
-
+      {showRecruitModal && (
+        <RecruitModal
+          show={showRecruitModal}
+          onClose={() => setShowRecruitModal(false)}
+          cardData={cardData} // 카드 데이터 필요 시 전달
+          onRecruitRequest={handleRecruitRequest}
+        />
+      )}
       {showConfirmModal && (
         <ConfirmModal
           show={showConfirmModal}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CloseIcon } from "../icons/wantbolbom";
 import CustomButtonSubmit from "../container/CustomButtonSubmit";
 import ProfileCard from "../card/ProfileCard";
+import CustomRow from "../container/CustomRow";
 
 const ProfileModal = ({ show, onClose, profileName }) => {
   if (!show) return null;
@@ -31,14 +32,19 @@ const ProfileModal = ({ show, onClose, profileName }) => {
   return (
     <Overlay>
       <ModalContainer>
+        <CustomRow
+          onClick={onClose}
+          width="100%"
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <CloseIcon />
+        </CustomRow>
         <ModalHeader>
           <div>
             <ModalTitle>{profileName}의 프로필</ModalTitle>
             <p>국가 자격 돌보미</p>
           </div>
-          <CloseButton onClick={onClose}>
-            <CloseIcon />
-          </CloseButton>
         </ModalHeader>
         <ModalContent>
           {reviewData.map((review, index) => (
@@ -63,7 +69,7 @@ const Overlay = styled.div`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 390px;
+  width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
@@ -76,7 +82,8 @@ const ModalContainer = styled.div`
   background: white;
   padding: 2rem;
   border-radius: 35px;
-  width: 300px;
+  width: 90%;
+  max-width: 500px;
   position: relative;
   gap: 1rem;
   box-sizing: border-box;
@@ -106,6 +113,7 @@ const ModalTitle = styled.h2`
 
 const ModalContent = styled.div`
   margin-bottom: 2rem;
+  width: 100%;
   p {
     margin: 0.5rem 0;
   }
